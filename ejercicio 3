@@ -1,0 +1,127 @@
+# Importamos ABC y abstractmethod
+from abc import ABC, abstractmethod
+
+
+# =====================================================
+# 1. Clase Cliente
+# =====================================================
+class Cliente:
+
+    # Constructor
+    def __init__(self, nombre, ciudad, pais):
+        self.nombre = nombre
+        self.ciudad = ciudad
+        self.pais = pais
+
+
+# =====================================================
+# 2. Clase abstracta Pedido
+# =====================================================
+class Pedido(ABC):
+
+    # Constructor
+    def __init__(self, cliente, productos, subtotal):
+        self.cliente = cliente
+        self.productos = productos
+        self.subtotal = subtotal
+
+    # Método abstracto
+    @abstractmethod
+    def calcular_envio(self):
+        pass
+
+    # Método abstracto
+    @abstractmethod
+    def imprimir_resumen(self):
+        pass
+
+
+# =====================================================
+# 3. Subclase PedidoNacional
+# =====================================================
+class PedidoNacional(Pedido):
+
+    # Método para calcular envío
+    def calcular_envio(self):
+        return 8000
+
+    # Método para imprimir resumen
+    def imprimir_resumen(self):
+
+        envio = self.calcular_envio()
+        total = self.subtotal + envio
+
+        print("====== PEDIDO NACIONAL ======")
+        print(f"Cliente: {self.cliente.nombre}")
+        print(f"Ciudad: {self.cliente.ciudad}")
+        print(f"País: {self.cliente.pais}")
+
+        print("\nProductos:")
+        for producto in self.productos:
+            print(f"- {producto}")
+
+        print(f"\nSubtotal: ${self.subtotal}")
+        print(f"Envío: ${envio}")
+        print(f"Total a pagar: ${total}")
+        print("-----------------------------------")
+
+
+# =====================================================
+# 4. Subclase PedidoInternacional
+# =====================================================
+class PedidoInternacional(Pedido):
+
+    # Método para calcular envío
+    def calcular_envio(self):
+        return self.subtotal * 0.15
+
+    # Método para imprimir resumen
+    def imprimir_resumen(self):
+
+        envio = self.calcular_envio()
+        total = self.subtotal + envio
+
+        print("====== PEDIDO INTERNACIONAL ======")
+        print(f"Cliente: {self.cliente.nombre}")
+        print(f"Ciudad: {self.cliente.ciudad}")
+        print(f"País: {self.cliente.pais}")
+
+        print("\nProductos:")
+        for producto in self.productos:
+            print(f"- {producto}")
+
+        print(f"\nSubtotal: ${self.subtotal}")
+        print(f"Envío: ${envio}")
+        print(f"Total a pagar: ${total}")
+        print("-----------------------------------")
+
+
+# =====================================================
+# 5. Objetos de prueba
+# =====================================================
+
+# Cliente nacional
+cliente1 = Cliente("Tomas Romero", "Medellín", "Colombia")
+
+# Cliente internacional
+cliente2 = Cliente("Maria Isabel Palacio", "Miami", "Estados Unidos")
+
+
+# Pedido nacional
+pedido1 = PedidoNacional(
+    cliente1,
+    ["Laptop", "Mouse"],
+    2500000
+)
+
+# Pedido internacional
+pedido2 = PedidoInternacional(
+    cliente2,
+    ["Celular", "Audífonos"],
+    3200000
+)
+
+
+# Imprimir resúmenes
+pedido1.imprimir_resumen()
+pedido2.imprimir_resumen()
