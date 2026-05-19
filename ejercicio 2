@@ -1,0 +1,84 @@
+# Importamos ABC y abstractmethod
+from abc import ABC, abstractmethod
+
+
+# =====================================================
+# 1. Clase abstracta
+# =====================================================
+class Notificacion(ABC):
+
+    # Constructor
+    def __init__(self, destinatario):
+        self.destinatario = destinatario
+
+    # Método abstracto
+    @abstractmethod
+    def enviar(self):
+        pass
+
+    # Método abstracto
+    @abstractmethod
+    def formato_mensaje(self):
+        pass
+
+
+# =====================================================
+# 2. Subclase NotificacionEmail
+# =====================================================
+class NotificacionEmail(Notificacion):
+
+    # Constructor
+    def __init__(self, destinatario, asunto):
+        super().__init__(destinatario)
+        self.asunto = asunto
+
+    # Implementación del método formato_mensaje
+    def formato_mensaje(self):
+        return f"Email para: {self.destinatario}\nAsunto: {self.asunto}"
+
+    # Implementación del método enviar
+    def enviar(self):
+        print("Enviando correo electrónico...")
+        print(self.formato_mensaje())
+        print("-----------------------------------")
+
+
+# =====================================================
+# 3. Subclase NotificacionSMS
+# =====================================================
+class NotificacionSMS(Notificacion):
+
+    # Constructor
+    def __init__(self, destinatario, numero):
+        super().__init__(destinatario)
+        self.numero = numero
+
+    # Implementación del método formato_mensaje
+    def formato_mensaje(self):
+        return f"SMS para: {self.destinatario}\nNúmero: {self.numero}"
+
+    # Implementación del método enviar
+    def enviar(self):
+        print("Enviando mensaje SMS...")
+        print(self.formato_mensaje())
+        print("-----------------------------------")
+
+
+# =====================================================
+# 4. Objetos de prueba
+# =====================================================
+
+# Crear objeto Email
+correo = NotificacionEmail(
+    "romeromunoztomas@gmail.com",    "Reunión de trabajo"
+)
+
+# Crear objeto SMS
+sms = NotificacionSMS(
+    "Tomas",
+    "3243651709"
+)
+
+# Mostrar formato y enviar notificaciones
+correo.enviar()
+sms.enviar()
