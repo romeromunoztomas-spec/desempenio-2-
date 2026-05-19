@@ -1,0 +1,48 @@
+# Importamos ABC y abstractmethod
+from abc import ABC, abstractmethod
+
+
+# =====================================================
+# 1. Clase abstracta
+# =====================================================
+class Electrodomestico(ABC):
+
+    # Constructor
+    def __init__(self, marca):
+        self.marca = marca
+
+    # Método abstracto
+    @abstractmethod
+    def encender(self):
+        pass
+
+
+# =====================================================
+# 2. Subclase que hereda de Electrodomestico
+# =====================================================
+class Licuadora(Electrodomestico):
+
+    # Constructor
+    def __init__(self, marca, velocidades):
+        # Llamamos al constructor de la clase padre
+        super().__init__(marca)
+        self.velocidades = velocidades
+
+    # Implementación del método abstracto
+    def encender(self):
+        print(f"La licuadora marca {self.marca} está encendida.")
+        print(f"Tiene {self.velocidades} velocidades disponibles.")
+        print("-----------------------------------")
+
+
+# =====================================================
+# 3. Objetos de prueba
+# =====================================================
+
+# Crear objetos
+licuadora1 = Licuadora("Oster", 5)
+licuadora2 = Licuadora("Black+Decker", 10)
+
+# Llamar métodos
+licuadora1.encender()
+licuadora2.encender()
